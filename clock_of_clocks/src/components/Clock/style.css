@@ -1,0 +1,13 @@
+.clock {
+  border-radius: 50%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.hour, .minute{
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transition: all .3s linear;
+}
