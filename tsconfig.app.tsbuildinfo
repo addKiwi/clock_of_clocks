@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/types.ts","./src/utils.ts","./src/components/clock/clock.tsx","./src/components/clock/index.ts","./src/components/dial/dial.tsx","./src/components/dial/index.ts"],"version":"5.8.3"}
