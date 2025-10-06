@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-.hour, .minute{
+.first, .second{
   box-sizing: border-box;
   position: absolute;
   left: 50%;

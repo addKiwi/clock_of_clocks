@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Clock } from './components/Clock/Clock'
+import { Clock } from './components//Clock'
 import type { ColorTheme } from './types'
+import { Dial } from './components/Dial';
 
 const theme: ColorTheme = {
   base: "#3F5EFB",
@@ -21,7 +22,7 @@ function App() {
   },[])
 
   return (<div className='app'>
-    <Clock size={300} theme={theme} time={date}  />
+    <Dial theme={theme} digit={0} />
   </div>)
 }
 
