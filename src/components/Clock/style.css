@@ -1,0 +1,16 @@
+.clock {
+  border-radius: 50%;
+  position: relative;
+  box-sizing: border-box;
+  border: 2px solid gray;
+  box-shadow: rgba(0, 0, 0, 0.15) -3px 5px 0px -2px;
+
+}
+
+.first, .second{
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transition: all .3s linear;
+}
