@@ -4,7 +4,7 @@ interface Props {
   status: boolean;
 }
 
-export const MenuWindow:React.FC<Props> = ({status}) => {
+export const MenuWindow:React.FC<Props> = ({}) => {
   return (
     <div className="menu-window">
       <form action="">

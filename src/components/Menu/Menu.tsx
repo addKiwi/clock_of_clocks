@@ -7,7 +7,7 @@ interface Props {
 
 }
 
-export const Menu: React.FC<Props> = memo((props) => {
+export const Menu: React.FC<Props> = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
   
     const handleClick = (status: boolean) => {
@@ -17,7 +17,7 @@ export const Menu: React.FC<Props> = memo((props) => {
   return (
     <div className='menu'>
       <MenuButton onClick={handleClick} />
-      {/* <MenuWindow status={isOpen}/> */}
+      {isOpen && <MenuWindow status={isOpen} />}
     </div>
   );
 });

@@ -1,9 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ColorTheme } from './types'
 import { Dial } from './components/Dial';
 import './App.css';
-import { MenuButton } from './components/MenuButton';
-import { MenuWindow } from './components/MenuWindow';
 import { Menu } from './components/Menu';
 
 const theme: ColorTheme = {
