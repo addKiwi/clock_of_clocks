@@ -1,18 +1,35 @@
 .app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-color: rgb(255, 255, 255);
+  position: relative;
+}
+
+.content {
   display: grid;
   box-shadow: rgba(0, 0, 0, 0.15) -9px 6px 9px 13px;
   padding: 10px;
 }
 
-.app.vertical {
+.content.vertical {
   grid-template-columns: repeat(2,1fr);
   row-gap: 10px;
 }
 
-.app.horizontal {
+.content.horizontal {
   grid-template-columns: repeat(4, 1fr);
 }
 
-.app.horizontal>div:nth-child(2) {
+.content.horizontal>div:nth-child(2) {
+  padding-right: 10px;
+}
+
+.app-menu {
+  width: 100%;
+  margin: 20px 0;
+  display: flex;
+  justify-content: right;
   padding-right: 10px;
 }

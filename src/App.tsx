@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ColorTheme } from './types'
 import { Dial } from './components/Dial';
 import './App.css';
+import { MenuButton } from './components/MenuButton';
+import { MenuWindow } from './components/MenuWindow';
+import { Menu } from './components/Menu';
 
 const theme: ColorTheme = {
   base: "rgba(0,0,0,0)",
@@ -19,33 +22,37 @@ const SIZE = 100;
 
 
 function App() {
-  const [time, setTime] = useState(DEFAULT_TIME);
+  const [time, setTime] = useState(DEFAULT_TIME); 
+  const dateRef = useRef<Date>(new Date());
 
   useEffect(() => {
     const t = setInterval(() => {
-      const date = new Date();
-
-      setTime(() => ({
-        t1: Math.floor(date.getHours() / 10),
-        t2: date.getHours() % 10,
-        t3: Math.floor(date.getMinutes() / 10),
-        t4: date.getMinutes() % 10,
-      }))
-    }, 1000);
+      dateRef.current = new Date();
+    }, 1000); 
 
     return () => clearInterval(t);
   }, [])
-  
+
   useEffect(() => {
-    console.log(time);
-  },[time])
-  
+    setTime({
+      t1: Math.floor(dateRef.current.getHours() / 10),
+      t2: dateRef.current.getHours() % 10,
+      t3: Math.floor(dateRef.current.getMinutes() / 10),
+      t4: dateRef.current.getMinutes() % 10,
+    });
+  }, [dateRef.current])
+      
   return (
-    <div className="app horizontal">
-      <Dial theme={theme} digit={time.t1} size={SIZE} />
-      <Dial theme={theme} digit={time.t2} size={SIZE} />
-      <Dial theme={theme} digit={time.t3} size={SIZE} />
-      <Dial theme={theme} digit={time.t4} size={SIZE} />
+    <div className="app">
+      <div className="app-menu">
+        <Menu />
+      </div>
+      <div className="content horizontal">
+        <Dial theme={theme} digit={time.t1} size={SIZE} />
+        <Dial theme={theme} digit={time.t2} size={SIZE} />
+        <Dial theme={theme} digit={time.t3} size={SIZE} />
+        <Dial theme={theme} digit={time.t4} size={SIZE} />
+      </div>
     </div>
   );
 }

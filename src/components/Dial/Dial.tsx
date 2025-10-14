@@ -2,13 +2,14 @@ import type { ColorTheme } from '../../types';
 import { Clock, type Hands } from '../Clock';
 import './style.css';
 import { digitRules } from '../../utils';
+import { memo } from 'react';
 interface Props {
   theme: ColorTheme;
   digit: number;
   size: number;
 }
 
-export const Dial: React.FC<Props> = ({ theme, digit, size }) => {
+export const Dial: React.FC<Props> = memo(({ theme, digit, size }) => {
   
   const dialMap = new Array(24).fill(null)
 
@@ -19,7 +20,7 @@ export const Dial: React.FC<Props> = ({ theme, digit, size }) => {
       ))}
     </div>
   );
-};
+});
 
 const getAngles = (position: number, digit: number): Hands => {
   const rulePosition = digitRules[position as keyof typeof digitRules];
