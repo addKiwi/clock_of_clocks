@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { MenuButton } from '../MenuButton';
 import './style.css';
 import { MenuWindow } from '../MenuWindow';
@@ -7,7 +7,7 @@ interface Props {
 
 }
 
-export const Menu: React.FC<Props> = (props) => {
+export const Menu: React.FC<Props> = memo((props) => {
   const [isOpen, setIsOpen] = useState(false);
   
     const handleClick = (status: boolean) => {
@@ -20,7 +20,7 @@ export const Menu: React.FC<Props> = (props) => {
       {/* <MenuWindow status={isOpen}/> */}
     </div>
   );
-};
+});
 
 
 

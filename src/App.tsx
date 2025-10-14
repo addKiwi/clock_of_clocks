@@ -23,24 +23,21 @@ const SIZE = 100;
 
 function App() {
   const [time, setTime] = useState(DEFAULT_TIME); 
-  const dateRef = useRef<Date>(new Date());
 
   useEffect(() => {
     const t = setInterval(() => {
-      dateRef.current = new Date();
+      const date = new Date();
+
+      setTime({
+        t1: Math.floor(date.getHours() / 10),
+        t2: date.getHours() % 10,
+        t3: Math.floor(date.getMinutes() / 10),
+        t4: date.getMinutes() % 10,
+      });
     }, 1000); 
 
     return () => clearInterval(t);
   }, [])
-
-  useEffect(() => {
-    setTime({
-      t1: Math.floor(dateRef.current.getHours() / 10),
-      t2: dateRef.current.getHours() % 10,
-      t3: Math.floor(dateRef.current.getMinutes() / 10),
-      t4: dateRef.current.getMinutes() % 10,
-    });
-  }, [dateRef.current])
       
   return (
     <div className="app">
