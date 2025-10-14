@@ -17,7 +17,7 @@ export const Menu: React.FC<Props> = (props) => {
   return (
     <div className='menu'>
       <MenuButton onClick={handleClick} />
-      <MenuWindow status={isOpen}/>
+      {/* <MenuWindow status={isOpen}/> */}
     </div>
   );
 };
