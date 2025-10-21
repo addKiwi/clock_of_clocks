@@ -1,23 +1,24 @@
 import { useEffect, useState } from 'react';
 import './style.css'
 import cn from 'classnames';
+import { TYPES } from '../../App';
 
 interface Props {
   status: boolean;
   handsColor: string;
   watchBorderColor: string;
   backgroundColor: string;
-  clockType: string;
+  clockType: TYPES;
   clockBackground: string;
-  handleType: (type:string) => void;
-  handleColors: () => void;
+  handleType: (type:TYPES) => void;
+  handleColors: (color:object) => void;
 }
 
 export const MenuWindow: React.FC<Props> = ({status, handsColor, watchBorderColor, backgroundColor, clockType, clockBackground, handleType, handleColors }) => {
   const [hands, setHands] = useState(handsColor);
   const [watchBorder, setWatchBorder] = useState(watchBorderColor);
   const [background, setBackground] = useState(backgroundColor);
-  const [type, setType] = useState(clockType);
+  const [type, setType] = useState<TYPES>(clockType);
   const [dialBackground, setDialBackground] = useState(clockBackground);
  
   useEffect(() => {
@@ -79,7 +80,7 @@ export const MenuWindow: React.FC<Props> = ({status, handsColor, watchBorderColo
               name="type"
               value="horizontal"
               checked={type === "horizontal"}
-              onChange={(e) => setType(e.target.value)}
+              onChange={() => setType(TYPES.HORIZONTAL)}
             />
             Horizontal
           </label>
@@ -89,7 +90,7 @@ export const MenuWindow: React.FC<Props> = ({status, handsColor, watchBorderColo
               name="type"
               value="vertical"
               checked={type === "vertical"}
-              onChange={(e) => setType(e.target.value)}
+              onChange={() => setType(TYPES.VERTICAL)}
             />
             Vertical
           </label>

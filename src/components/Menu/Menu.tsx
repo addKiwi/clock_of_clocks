@@ -5,13 +5,13 @@ import { MenuWindow } from '../MenuWindow';
 import type { TYPES } from '../../App';
 
 interface Props {
-  handleType: () => void;
-  handleColors: () => void;
+  handleType: (type:TYPES) => void;
+  handleColors: (color:any) => void;
   type: TYPES;
   colors: object;
 }
 
-export const Menu: React.FC<Props> = memo(({handleType, handleColors, type, colors}) => {
+export const Menu: React.FC<Props> = memo(({handleType, handleColors, type}) => {
   const [isOpen, setIsOpen] = useState(false);
   
     const handleClick = (status: boolean) => {
@@ -26,10 +26,10 @@ export const Menu: React.FC<Props> = memo(({handleType, handleColors, type, colo
         handsColor={"#000000"}
         watchBorderColor={"#808080"}
         backgroundColor={"#ffffff"}
-        clockType={"horizontal"}
+        clockType={type}
         clockBackground={'#ffffff'}
         handleType={handleType}
-        handleColors={ handleColors} />
+        handleColors={handleColors} />
     </div>
   );
 });

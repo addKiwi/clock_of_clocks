@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ColorTheme } from './types'
 import { Dial } from './components/Dial';
 import './App.css';
@@ -27,7 +27,7 @@ export enum TYPES {
 
 function App() {
   const [time, setTime] = useState(DEFAULT_TIME);
-  const [colorTheme, setColorTheme] = useState();
+  const [colorTheme, setColorTheme] = useState<object>({});
   const [type, setType] = useState<TYPES>(TYPES.HORIZONTAL);
 
 
