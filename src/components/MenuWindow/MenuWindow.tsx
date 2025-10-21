@@ -14,7 +14,7 @@ interface Props {
   handleColors: (color:object) => void;
 }
 
-export const MenuWindow: React.FC<Props> = ({status, handsColor, watchBorderColor, backgroundColor, clockType, clockBackground, handleType, handleColors }) => {
+export const MenuWindow: React.FC<Props> = ({status, handsColor, watchBorderColor, backgroundColor, clockType, clockBackground, handleType }) => {
   const [hands, setHands] = useState(handsColor);
   const [watchBorder, setWatchBorder] = useState(watchBorderColor);
   const [background, setBackground] = useState(backgroundColor);
