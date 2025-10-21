@@ -1,21 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './style.css'
 import cn  from 'classnames';
 
 interface Props {
-  onClick: (active:boolean) => void;
+  onClick: (active: boolean) => void;
+  isOpen: boolean;
 }
 
-export const MenuButton: React.FC<Props> = ({onClick}) => {
-  const [isActive, setIsActive] = useState(false);
+export const MenuButton: React.FC<Props> = ({isOpen, onClick}) => {
+  const [isActive, setIsActive] = useState(isOpen);
 
-  const handleClick = () => {
-    setIsActive(prev => !prev)
-    onClick(isActive);
-  }
+  useEffect(() => {
+    onClick(isActive)
+  },[isActive])
 
   return (
-    <div className={cn("menu-button", {"active":isActive})} onClick={handleClick}>
+    <div
+      className={cn("menu-button", { active: isActive })}
+      onClick={() => setIsActive((prev) => !prev)}
+    >
       <div className="line line-1"></div>
       <div className="line line-2"></div>
       <div className="line line-3"></div>

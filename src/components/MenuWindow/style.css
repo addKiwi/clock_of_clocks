@@ -1,0 +1,42 @@
+.menu-window {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  color: white;
+  background: #929292;
+  padding: 75px 50px 50px 50px;
+  top:0;
+  right:0;
+  z-index: 1;
+  transition: all .3s linear;
+  transition-delay: .1s;
+  transform: translateX(400px);
+  border-top-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+.menu-window.open {
+  transform: translateX(0px);
+}
+
+.menu-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-option {
+  padding: 10px;
+  margin-bottom:10px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.form-option input {
+  margin-right: 10px;
+}
+
+input[type="color"] {
+  height: 30px;
+  width: 30px;
+}

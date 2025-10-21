@@ -3,7 +3,7 @@
   height: 40px;
   overflow: hidden;
   position: relative;
-
+  z-index: 999;
 }
 
 .menu-button:hover .line {

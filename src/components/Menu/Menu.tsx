@@ -15,9 +15,15 @@ export const Menu: React.FC<Props> = memo(() => {
     };
   
   return (
-    <div className='menu'>
-      <MenuButton onClick={handleClick} />
-      {isOpen && <MenuWindow status={isOpen} />}
+    <div className="menu">
+      <MenuButton onClick={handleClick} isOpen={isOpen} />
+      <MenuWindow
+        status={isOpen}
+        handsColor={"#000000"}
+        watchBorderColor={"#808080"}
+        backgroundColor={"#ffffff"}
+        clockType={"horizontal"}
+      />
     </div>
   );
 });
