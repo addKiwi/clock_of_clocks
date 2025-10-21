@@ -2,12 +2,16 @@ import { memo, useState } from 'react';
 import { MenuButton } from '../MenuButton';
 import './style.css';
 import { MenuWindow } from '../MenuWindow';
+import type { TYPES } from '../../App';
 
 interface Props {
-
+  handleType: () => void;
+  handleColors: () => void;
+  type: TYPES;
+  colors: object;
 }
 
-export const Menu: React.FC<Props> = memo(() => {
+export const Menu: React.FC<Props> = memo(({handleType, handleColors, type, colors}) => {
   const [isOpen, setIsOpen] = useState(false);
   
     const handleClick = (status: boolean) => {
@@ -23,7 +27,9 @@ export const Menu: React.FC<Props> = memo(() => {
         watchBorderColor={"#808080"}
         backgroundColor={"#ffffff"}
         clockType={"horizontal"}
-      />
+        clockBackground={'#ffffff'}
+        handleType={handleType}
+        handleColors={ handleColors} />
     </div>
   );
 });

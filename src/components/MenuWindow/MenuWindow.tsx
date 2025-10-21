@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './style.css'
 import cn from 'classnames';
 
@@ -8,18 +8,25 @@ interface Props {
   watchBorderColor: string;
   backgroundColor: string;
   clockType: string;
+  clockBackground: string;
+  handleType: (type:string) => void;
+  handleColors: () => void;
 }
 
-export const MenuWindow: React.FC<Props> = ({status, handsColor, watchBorderColor, backgroundColor, clockType }) => {
+export const MenuWindow: React.FC<Props> = ({status, handsColor, watchBorderColor, backgroundColor, clockType, clockBackground, handleType, handleColors }) => {
   const [hands, setHands] = useState(handsColor);
   const [watchBorder, setWatchBorder] = useState(watchBorderColor);
   const [background, setBackground] = useState(backgroundColor);
   const [type, setType] = useState(clockType);
+  const [dialBackground, setDialBackground] = useState(clockBackground);
  
+  useEffect(() => {
+    handleType(type); 
+  },[type])
 
   return (
-    <div className={cn("menu-window", {"open": status})}>
-      <form action="" className="menu-form" >
+    <div className={cn("menu-window", { open: status })}>
+      <form action="" className="menu-form">
         <div className="form-option">
           <label>
             <input
@@ -54,29 +61,38 @@ export const MenuWindow: React.FC<Props> = ({status, handsColor, watchBorderColo
           </label>
         </div>
         <div className="form-option">
-          <div className="forrm-option">
-            Type:
-            <label>
-              <input
-                type="radio"
-                name="type"
-                value="horizontal"
-                checked={type === "horizontal"}
-                onChange={(e) => setType(e.target.value)}
-              />
-              Horizontal
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="type"
-                value="vertical"
-                checked={type === "vertical"}
-                onChange={(e) => setType(e.target.value)}
-              />
-              Vertical
-            </label>
-          </div>
+          <label>
+            <input
+              type="color"
+              value={dialBackground}
+              name="dialBackground"
+              onChange={(e) => setDialBackground(e.target.value)}
+            />
+            Dial background color
+          </label>
+        </div>
+        <div className="form-option">
+          Type:
+          <label>
+            <input
+              type="radio"
+              name="type"
+              value="horizontal"
+              checked={type === "horizontal"}
+              onChange={(e) => setType(e.target.value)}
+            />
+            Horizontal
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="type"
+              value="vertical"
+              checked={type === "vertical"}
+              onChange={(e) => setType(e.target.value)}
+            />
+            Vertical
+          </label>
         </div>
       </form>
     </div>
