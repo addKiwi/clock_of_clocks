@@ -40,3 +40,8 @@ input[type="color"] {
   height: 30px;
   width: 30px;
 }
+
+input[type="number"] {
+  width: 97%;
+  height: 20px;
+}

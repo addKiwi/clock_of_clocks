@@ -1,7 +1,7 @@
 import type { ColorTheme } from '../../types';
 import { Clock, type Hands } from '../Clock';
 import './style.css';
-import { digitRules } from '../../utils';
+import { digitRules } from '../../utils/digitRules';
 import { memo } from 'react';
 interface Props {
   theme: ColorTheme;
@@ -10,11 +10,11 @@ interface Props {
 }
 
 export const Dial: React.FC<Props> = memo(({ theme, digit, size }) => {
-  
+  const { background } = theme;
   const dialMap = new Array(24).fill(null)
 
   return (
-    <div className="dial vertical">
+    <div className="dial vertical" style={{backgroundColor: `${background}`}}>
       {dialMap.map((_, i) => (
         <Clock size={size} theme={theme} angles={getAngles(i, digit)} key={i} />
       ))}

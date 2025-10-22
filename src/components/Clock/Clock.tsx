@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const Clock: React.FC<Props> = ({ angles, size, theme }) => {
-  const { base, hand } = theme;
+  const { clockBackground, hand, watchBorder } = theme;
   const { handAngle1, handAngle2 } = angles;
 
   const handStyle = useMemo(
@@ -25,7 +25,7 @@ export const Clock: React.FC<Props> = ({ angles, size, theme }) => {
       transformOrigin: `${size / 40}px ${size / 40}px`,
       backgroundColor: `${hand}`,
     }),
-    [size]
+    [size, hand]
   );
 
   const firstHand = useMemo(
@@ -50,7 +50,12 @@ export const Clock: React.FC<Props> = ({ angles, size, theme }) => {
 
   return (
     <div
-      style={{ width: `${size}px`, height: `${size}px`, background: `${base}` }}
+      style={{
+        width: `${size}px`,
+        height: `${size}px`,
+        background: `${clockBackground}`,
+        borderColor: `${watchBorder}`
+      }}
       className="clock"
     >
       <div className="first" style={firstHand}></div>
