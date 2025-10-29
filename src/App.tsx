@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { TYPES, type ColorTheme } from './types'
+import { TYPES } from './types'
 import { Dial } from './components/Dial';
 import './App.css';
 import { Menu } from './components/Menu';
 import cn from 'classnames';
-import { useDebounce } from './utils/debounce';
+import { useAppSelector } from './utils/hooks';
 
 const DEFAULT_TIME = {
   t1: 0,
@@ -13,21 +13,9 @@ const DEFAULT_TIME = {
   t4: 0,
 }
 
-const DEFAULT_SIZE = 100;
-        
-const DEFAULT_COLOR_THEME:ColorTheme = {
-  hand: "#000000",
-  watchBorder: "#808080",
-  background: "#ffffff",
-  clockBackground: "rgba(0,0,0,0)",
-};
-
 function App() {
   const [time, setTime] = useState(DEFAULT_TIME);
-  const [colorTheme, setColorTheme] = useState<ColorTheme>(DEFAULT_COLOR_THEME);
-  const [type, setType] = useState<TYPES>(TYPES.HORIZONTAL);
-  const debouncedColorTheme = useDebounce(colorTheme, 300);
-  const [size, setSize] = useState<number>(DEFAULT_SIZE);
+  const { type } = useAppSelector((state) => state.clockDimensions);
 
   useEffect(() => {
     const t = setInterval(() => {
@@ -47,15 +35,7 @@ function App() {
   return (
     <div className="app">
       <div className="app-menu">
-        <Menu
-          handleType={setType}
-          handleColors={setColorTheme}
-          handleSize={setSize}
-          size={size}
-          type={type}
-          colors={debouncedColorTheme}
-
-        />
+        <Menu/>
       </div>
       <div
         className={cn("content", {
@@ -63,10 +43,10 @@ function App() {
           vertical: type === TYPES.VERTICAL,
         })}
       >
-        <Dial theme={debouncedColorTheme} digit={time.t1} size={size} />
-        <Dial theme={debouncedColorTheme} digit={time.t2} size={size} />
-        <Dial theme={debouncedColorTheme} digit={time.t3} size={size} />
-        <Dial theme={debouncedColorTheme} digit={time.t4} size={size} />
+        <Dial digit={time.t1} />
+        <Dial digit={time.t2} />
+        <Dial digit={time.t3} />
+        <Dial digit={time.t4} />
       </div>
     </div>
   );

@@ -1,45 +1,38 @@
-import { useEffect, useState } from 'react';
-import './style.css'
-import cn from 'classnames';
-import { TYPES, type Color, type ColorTheme } from '../../types';
+import "./style.css";
+import cn from "classnames";
+import { TYPES, type Color} from "../../types";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
+import {
+  updateBackground,
+  updateClockBackground,
+  updateHand,
+  updateWatchBorder,
+} from "../../state/colorThemeSlice";
+import { useDebouncedCallback } from "use-debounce";
+import { updateSize, updateType } from "../../state/clockDimensionsSlice";
 
 interface Props {
   status: boolean;
-  handsColor: Color;
-  watchBorderColor: Color;
-  backgroundColor: Color;
-  clockType: TYPES;
-  clockBackground: Color;
-  handleType: (type:TYPES) => void;
-  handleColors: (color: ColorTheme) => void;
-  handleSize: (size: number) => void;
-  size: number;
 }
 
-export const MenuWindow: React.FC<Props> = ({status, handsColor, watchBorderColor, backgroundColor, clockType, clockBackground, handleType, handleColors, handleSize, size }) => {
-  const [hands, setHands] = useState(handsColor); 
-  const [watchBorder, setWatchBorder] = useState(watchBorderColor);
-  const [background, setBackground] = useState(backgroundColor);
-  const [type, setType] = useState<TYPES>(clockType);
-  const [dialBackground, setDialBackground] = useState(clockBackground);
-  const [clockSize, setClockSize] = useState(size);
- 
-  useEffect(() => {
-    handleType(type); 
-  }, [type])
-
-  useEffect(() => {
-    handleSize(clockSize);
-  }, [clockSize]);
-  
-  useEffect(() => {
-    handleColors({
-      hand: hands,
-      watchBorder: watchBorder,
-      background: background,
-      clockBackground: dialBackground,
-    });
-  },[hands, watchBorder, background, dialBackground])
+export const MenuWindow: React.FC<Props> = ({status}) => {
+  const { clockBackground, hand, watchBorder, background } = useAppSelector(
+    (state) => state.colorTheme
+  );
+  const { type, size } = useAppSelector((state) => state.clockDimensions);
+  const dispatch = useAppDispatch();
+  const debouncedOnChangeHand = useDebouncedCallback((value) => {
+    dispatch(updateHand(value as Color));
+  }, 300);
+  const debouncedOnChangeWatchBorder = useDebouncedCallback((value) => {
+    dispatch(updateWatchBorder(value as Color));
+  }, 300);
+  const debouncedOnChangeBackground = useDebouncedCallback((value) => {
+    dispatch(updateBackground(value as Color));
+  }, 300);
+  const debouncedOnChangeClockBackground = useDebouncedCallback((value) => {
+    dispatch(updateClockBackground(value as Color));
+  }, 300);
 
   return (
     <div className={cn("menu-window", { open: status })}>
@@ -48,9 +41,11 @@ export const MenuWindow: React.FC<Props> = ({status, handsColor, watchBorderColo
           <label>
             <input
               type="color"
-              value={hands}
+              value={hand}
               name="handsColor"
-              onChange={(e) => setHands(e.target.value as Color)}
+              onChange={(e) => {
+                debouncedOnChangeHand(e.target.value);
+              }}
             />
             Hands color
           </label>
@@ -61,7 +56,9 @@ export const MenuWindow: React.FC<Props> = ({status, handsColor, watchBorderColo
               type="color"
               value={watchBorder}
               name="watchBorderColor"
-              onChange={(e) => setWatchBorder(e.target.value as Color)}
+              onChange={(e) => {
+                debouncedOnChangeWatchBorder(e.target.value);
+              }}
             />
             Little watch border color
           </label>
@@ -72,7 +69,9 @@ export const MenuWindow: React.FC<Props> = ({status, handsColor, watchBorderColo
               type="color"
               value={background}
               name="backgroundColor"
-              onChange={(e) => setBackground(e.target.value as Color)}
+              onChange={(e) => {
+                debouncedOnChangeBackground(e.target.value);
+              }}
             />
             Background color
           </label>
@@ -81,9 +80,11 @@ export const MenuWindow: React.FC<Props> = ({status, handsColor, watchBorderColo
           <label>
             <input
               type="color"
-              value={dialBackground}
+              value={clockBackground}
               name="dialBackground"
-              onChange={(e) => setDialBackground(e.target.value as Color)}
+              onChange={(e) => {
+                debouncedOnChangeClockBackground(e.target.value);
+              }}
             />
             Dial background color
           </label>
@@ -94,7 +95,7 @@ export const MenuWindow: React.FC<Props> = ({status, handsColor, watchBorderColo
               type="number"
               name="size"
               value={size}
-              onChange={(e)=> setClockSize(+e.target.value)}
+              onChange={(e) => dispatch(updateSize(+e.target.value))}
             />
           </label>
         </div>
@@ -106,7 +107,7 @@ export const MenuWindow: React.FC<Props> = ({status, handsColor, watchBorderColo
               name="type"
               value="horizontal"
               checked={type === "horizontal"}
-              onChange={() => setType(TYPES.HORIZONTAL)}
+              onChange={() => dispatch(updateType(TYPES.HORIZONTAL))}
             />
             Horizontal
           </label>
@@ -116,7 +117,7 @@ export const MenuWindow: React.FC<Props> = ({status, handsColor, watchBorderColo
               name="type"
               value="vertical"
               checked={type === "vertical"}
-              onChange={() => setType(TYPES.VERTICAL)}
+              onChange={() => dispatch(updateType(TYPES.VERTICAL))}
             />
             Vertical
           </label>

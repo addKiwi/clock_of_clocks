@@ -1,5 +1,13 @@
 .dial {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  padding: 10px 0;
 }
 
+.dial:first-child {
+  padding-left: 10px;
+}
+
+.dial:last-child {
+  padding-right: 10px;
+}
