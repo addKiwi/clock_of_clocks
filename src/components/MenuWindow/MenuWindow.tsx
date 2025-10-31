@@ -10,10 +10,13 @@ import {
 } from "../../state/colorThemeSlice";
 import { useDebouncedCallback } from "use-debounce";
 import { updateSize, updateType } from "../../state/clockDimensionsSlice";
+import { useEffect, useState } from "react";
 
 interface Props {
   status: boolean;
 }
+
+const TRANSPARENT_COLOR = 'rgba(0,0,0,0)';
 
 export const MenuWindow: React.FC<Props> = ({status}) => {
   const { clockBackground, hand, watchBorder, background } = useAppSelector(
@@ -21,6 +24,8 @@ export const MenuWindow: React.FC<Props> = ({status}) => {
   );
   const { type, size } = useAppSelector((state) => state.clockDimensions);
   const dispatch = useAppDispatch();
+  const [isCheked, setIsChecked] = useState(true);
+  const [dialBackground, setDialBackground] = useState(clockBackground);
   const debouncedOnChangeHand = useDebouncedCallback((value) => {
     dispatch(updateHand(value as Color));
   }, 300);
@@ -33,6 +38,25 @@ export const MenuWindow: React.FC<Props> = ({status}) => {
   const debouncedOnChangeClockBackground = useDebouncedCallback((value) => {
     dispatch(updateClockBackground(value as Color));
   }, 300);
+
+  useEffect(() => {
+    if (isCheked) {
+      debouncedOnChangeClockBackground(TRANSPARENT_COLOR);
+    }
+  }, [isCheked]);
+
+  useEffect(() => {
+    if (dialBackground === TRANSPARENT_COLOR) {
+      setIsChecked(true);
+    } else {
+      setIsChecked(false);
+      debouncedOnChangeClockBackground(dialBackground);
+    }
+  },[dialBackground])
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(e.target.checked)
+  };
 
   return (
     <div className={cn("menu-window", { open: status })}>
@@ -80,13 +104,24 @@ export const MenuWindow: React.FC<Props> = ({status}) => {
           <label>
             <input
               type="color"
-              value={clockBackground}
+              value={dialBackground}
               name="dialBackground"
               onChange={(e) => {
-                debouncedOnChangeClockBackground(e.target.value);
+                setDialBackground(e.target.value as Color);
               }}
             />
             Dial background color
+          </label>
+        </div>
+        <div className="form-option">
+          <label>
+            <input
+              type="checkbox"
+              name="transparentDialBackground"
+              onChange={(e) => handleCheckboxChange(e)}
+              checked={isCheked} 
+            />
+            Transparent dial
           </label>
         </div>
         <div className="form-option">
